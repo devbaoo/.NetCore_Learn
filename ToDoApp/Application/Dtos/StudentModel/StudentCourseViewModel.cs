@@ -6,4 +6,5 @@ public class StudentCourseViewModel
     public string StudentName { get; set; }
 
     public List<CourseViewModel> Courses { get; set; }
+    
 }

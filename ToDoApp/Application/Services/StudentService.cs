@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Dtos;
 using ToDoApp.Application.Dtos;
+using ToDoApp.Application.Dtos.StudentModel;
 using ToDoApp.Domains.Entities;
 using ToDoApp.Infrastructures;
 
@@ -16,15 +17,20 @@ public interface IStudentService
      StudentCourseViewModel GetStudentDetail(int id);
 
      void EnrollCourse(int studentId, int courseId);
+
+     void UpdateScore(StudentScore model);
+     decimal GetStudentAverageScore(int studentId);
 }
+
 public class StudentService : IStudentService
 {
      private readonly IApplicationDBContext _dbContext;
-     
+
      public StudentService(IApplicationDBContext dbContext)
      {
           _dbContext = dbContext;
      }
+
      // IQueryable the hien cau query van chua thuc thi
      public IEnumerable<StudentViewModel> GetStudents(int? schoolId)
      {
@@ -33,10 +39,11 @@ public class StudentService : IStudentService
                .Include(Student => Student.School)
                .AsQueryable();
           if (schoolId != null)
-          { 
+          {
                // WHERE School.Id = schoolId
                students = students.Where(x => x.School.Id == schoolId);
           }
+
           //Select
           //Student.Id
           //Student.FirstName + " " + Student.LastName as FullName
@@ -52,6 +59,7 @@ public class StudentService : IStudentService
                SchoolName = x.School.Name
           }).ToList();
      }
+
      public Student CreateStudent(StudentCreateModel student)
      {
           var data = new Student
@@ -66,6 +74,7 @@ public class StudentService : IStudentService
           _dbContext.SaveChanges();
           return data;
      }
+
      public Student UpdateStudent(int id, StudentUpdateModel student)
      {
           var data = _dbContext.Student.Find(id);
@@ -73,16 +82,17 @@ public class StudentService : IStudentService
           {
                return null;
           }
+
           data.FirstName = student.FirstName;
           data.LastName = student.LastName;
           data.DateOfBirth = student.DateOfBirth;
           data.Address1 = student.Address1;
-          data.balance = student.Balance;   
+          data.balance = student.Balance;
           data.SId = student.SchoolId;
-          _dbContext.SaveChanges(); 
-          return data;   
+          _dbContext.SaveChanges();
+          return data;
      }
-     
+
      public void DeleteStudent(int id)
      {
           var data = _dbContext.Student.Find(id);
@@ -90,24 +100,28 @@ public class StudentService : IStudentService
           {
                return;
           }
+
           _dbContext.Student.Remove(data);
           _dbContext.SaveChanges();
      }
+
      public Student GetStudent(int id)
      {
           return _dbContext.Student.Find(id);
      }
-     
+
      public StudentCourseViewModel GetStudentDetail(int id)
      {
           var student = _dbContext.Student
                .Include(x => x.CourseStudents)
                .ThenInclude(x => x.Course)
                .FirstOrDefault(x => x.Id == id);
+
           if (student == null)
           {
                return null;
           }
+
           return new StudentCourseViewModel
           {
                StudentId = student.Id,
@@ -115,10 +129,15 @@ public class StudentService : IStudentService
                Courses = student.CourseStudents.Select(x => new CourseViewModel
                {
                     CourseId = x.Course.Id,
-                    CourseName  = x.Course.Name
-               }).ToList()
+                    CourseName = x.Course.Name,
+                    AssignmentScore = x.AssignmentScore,
+                    PracticalScore = x.PracticalScore,
+                    FinalScore = x.FinalScore
+               }).ToList() 
           };
      }
+
+
      public void EnrollCourse(int studentId, int courseId)
      {
           var student = _dbContext.Student.Find(studentId);
@@ -126,11 +145,13 @@ public class StudentService : IStudentService
           {
                throw new Exception("Student not found");
           }
+
           var course = _dbContext.Course.Find(courseId);
           if (course == null)
           {
                throw new Exception("Course not found");
           }
+
           var courseStudent = new CourseStudent
           {
                StudentId = studentId,
@@ -139,7 +160,54 @@ public class StudentService : IStudentService
           _dbContext.CourseStudent.Add(courseStudent);
           _dbContext.SaveChanges();
      }
+
+     public void UpdateScore(StudentScore model)
+     {
+          var courseStudent = _dbContext.CourseStudent.FirstOrDefault(x => x.StudentId == model.StudentId && x.CourseId == model.CourseId);
+          if (courseStudent == null)
+          {
+               courseStudent = new CourseStudent
+               {
+                    StudentId = model.StudentId,
+                    CourseId = model.CourseId,
+                    AssignmentScore = model.AssignmentScore,
+                    PracticalScore = model.PracticalScore,
+                    FinalScore = model.FinalScore
+               };
+               _dbContext.CourseStudent.Add(courseStudent);
+          }
+          else
+          {
+               courseStudent.AssignmentScore = model.AssignmentScore;
+               courseStudent.PracticalScore = model.PracticalScore;
+               courseStudent.FinalScore = model.FinalScore;
+          }
+
+          _dbContext.SaveChanges();
+     }
+
+     public decimal GetStudentAverageScore(int studentId)
+     {
+          var student = _dbContext.Student
+               .Include(x => x.CourseStudents)
+               .FirstOrDefault(x => x.Id == studentId);
+
+          if (student == null)
+          {
+               throw new Exception("Student not found");
+          }
+          if (student.CourseStudents.Count == 0)
+          {
+               throw new Exception("Student has not enrolled in any course");
+          } 
+          //Còn điểm trung bình nhé
+          var finalScore = student.CourseStudents.Average(x => x.FinalScore);
+          var assignmentScore = student.CourseStudents.Average(x => x.AssignmentScore);
+          var practicalScore = student.CourseStudents.Average(x => x.PracticalScore);
           
-
-
+          var averageScore = (finalScore*3 + assignmentScore + practicalScore*2) / 6;
+          return averageScore;
+     }    
+     
+          
 }
