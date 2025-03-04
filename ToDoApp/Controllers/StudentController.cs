@@ -91,6 +91,23 @@ public class StudentController : ControllerBase
             return NotFound(new { status = "error", message = ex.Message });
         }
     }
-    
+    [HttpPost ("updateScore")]
+    public ActionResult UpdateScore([FromBody] StudentScore model){
+        try
+        {
+            _studentService.UpdateScore(model);
+            return Ok(model);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { status = "error", message = ex.Message });
+        }
+    }
+    [HttpGet("{id}/averageScores")]
+    public ActionResult<IEnumerable<StudentScore>>  GetStudentAverageScore(int id)
+    {
+        var averageScores = _studentService.GetStudentAverageScore(id);
+        return Ok(averageScores);
+    } 
 
 }

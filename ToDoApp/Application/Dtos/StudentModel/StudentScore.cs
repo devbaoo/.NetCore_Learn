@@ -1,14 +1,10 @@
-namespace ToDoApp.Application.Dtos;
+namespace ToDoApp.Application.Dtos.StudentModel;
 
-public class CourseViewModel
+public class StudentScore
 {
+    public int StudentId { get; set; }
     public int CourseId { get; set; }
-    public string CourseName { get; set; }
-    
     public decimal AssignmentScore { get; set; }
-    
     public decimal PracticalScore { get; set; }
-    
     public decimal FinalScore { get; set; }
-    public DateTime StartDate { get; set; }
 }
