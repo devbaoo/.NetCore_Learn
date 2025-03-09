@@ -72,4 +72,16 @@ public class SchoolController : ControllerBase
         _schoolService.DeleteSchool(id);
         return NoContent();
     }
+    
+    [HttpGet("{schoolId}/detail")]
+    public ActionResult<IEnumerable<SchoolStudentViewModel>> GetStudentDetailBySchool(int schoolId)
+    {
+        var schoolDetail = _schoolService.GetSchoolDetail(schoolId);
+        if(schoolDetail == null)
+        {
+            return NotFound(new { status = "error", message = "School not found" });
+        }
+        return Ok(schoolDetail);
+
+    }
 }

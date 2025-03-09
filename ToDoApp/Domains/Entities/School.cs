@@ -9,5 +9,5 @@ public class School
     public string Address { get; set; }
     
     [NotMapped]
-    public ICollection<Student> Students { get; set; }
+    public virtual ICollection<Student> Students { get; set; }
 }

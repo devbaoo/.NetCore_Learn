@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ToDoApp.Domains.Entities;
 using ToDoApp.Infrastructures.DataMapping;
 
@@ -18,6 +20,9 @@ namespace ToDoApp.Infrastructures
         
         public DbSet<Course> Course { get; set; }
         
+        public DbSet<AuditLog> AuditLog { get; set; }
+
+        
         public DbSet<CourseStudent> CourseStudent { get; set; }
 
         
@@ -27,6 +32,7 @@ namespace ToDoApp.Infrastructures
         {
             if (!optionsBuilder.IsConfigured)
             {
+                optionsBuilder.UseLazyLoadingProxies();
                 optionsBuilder.UseSqlServer("Server=167.99.78.5,1433;Initial Catalog=ToDoApp;Persist Security Info=False;User ID=sa;Password=12345@aA;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
             }
         }
@@ -44,15 +50,50 @@ namespace ToDoApp.Infrastructures
                 .HasMany(x => x.CourseStudents)
                 .WithOne(x => x.Course)
                 .HasForeignKey(x => x.CourseId);
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.School)
+                .WithMany(sch => sch.Students)
+                .HasForeignKey(s => s.SId);
             modelBuilder.Entity<CourseStudent>()
                 .HasKey(x => new {x.CourseId, x.StudentId});
             modelBuilder.ApplyConfiguration(new CourseMapping());
             base.OnModelCreating(modelBuilder);
         }
 
+        public EntityEntry<T> Entry<T>(T entity) where T : class
+        {
+            return base.Entry(entity);
+        }
         public int SaveChanges()
         {
+            var auditLogs = new List<AuditLog>();
+            foreach (var entity in ChangeTracker.Entries()) {
+                var log = new AuditLog
+                {
+                    EntityName = entity.Entity.GetType().Name,
+                    CreatedAt = DateTime.Now,
+                    Action = entity.State.ToString(),
+                
+                };
+                if (entity.State == EntityState.Added)
+                {
+                    log.NewValue = JsonSerializer.Serialize(entity.CurrentValues.ToObject());
+                }
+                if (entity.State == EntityState.Modified)
+                {
+                    log.OldValue = JsonSerializer.Serialize(entity.OriginalValues.ToObject());
+                    log.NewValue = JsonSerializer.Serialize(entity.CurrentValues.ToObject());
+                }
+                if (entity.State == EntityState.Deleted)
+                {
+                    log.OldValue = JsonSerializer.Serialize(entity.OriginalValues.ToObject());
+                }
+                auditLogs.Add(log);
+
+            }
+            AuditLog.AddRange(auditLogs); //state 
             return base.SaveChanges();
         }
     }
+    
 }
