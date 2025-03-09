@@ -109,5 +109,7 @@ public class StudentController : ControllerBase
         var averageScores = _studentService.GetStudentAverageScore(id);
         return Ok(averageScores);
     } 
+    
+    
 
 }

@@ -7,7 +7,7 @@ public class Course
     
     public DateTime StartDate { get; set; }
     
-    public ICollection<CourseStudent> CourseStudents { get; set; }
+    public virtual ICollection<CourseStudent> CourseStudents { get; set; }
     
     
     
