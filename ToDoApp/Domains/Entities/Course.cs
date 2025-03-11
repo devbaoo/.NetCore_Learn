@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ToDoApp.Domains.Entities;
 
 public class Course
@@ -7,8 +9,15 @@ public class Course
     
     public DateTime StartDate { get; set; }
     
+    [JsonIgnore] 
     public virtual ICollection<CourseStudent> CourseStudents { get; set; }
     
+    public int CreatedBy { get; set; }
     
+    public DateTime CreatedAt { get; set; }
+    
+    public int UpdatedBy { get; set; }
+    
+    public DateTime UpdatedAt { get; set; }
     
 }

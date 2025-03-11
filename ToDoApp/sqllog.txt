@@ -1,0 +1,868 @@
+Query: SELECT [c].[Id] AS [CourseId], [c].[Name] AS [CourseName], [c].[StartDate]
+FROM [Courses] AS [c] - Time: 542ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 848ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([Name], [StartDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6);
+ - Time: 574ms
+Query: SELECT TOP(1) [c].[Id], [c].[Name], [c].[StartDate]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 662ms
+Query: SELECT TOP(1) [c].[Id], [c].[Name], [c].[StartDate]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 566ms
+Query: SELECT TOP(1) [c].[Id], [c].[Name], [c].[StartDate]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 607ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 692ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 657ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+UPDATE [Courses] SET [Name] = @p5, [StartDate] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+ - Time: 678ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 577ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Courses] ([Name], [StartDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+ - Time: 815ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([Name], [StartDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6);
+ - Time: 1160ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([Name], [StartDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6);
+ - Time: 953ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([Name], [StartDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6);
+ - Time: 1899ms
+Query: SELECT TOP(1) [c].[Id], [c].[Name], [c].[StartDate]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 737ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 613ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 522ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+UPDATE [Courses] SET [Name] = @p5, [StartDate] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+ - Time: 643ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 608ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([Name], [StartDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6);
+ - Time: 688ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([Name], [StartDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6);
+ - Time: 651ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 653ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 658ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 671ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 644ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 691ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 659ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 619ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 621ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 615ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 618ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 652ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 654ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 592ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 581ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 618ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 606ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3),
+(@p20, @p21, @p22, @p23, @p24, 4),
+(@p25, @p26, @p27, @p28, @p29, 5),
+(@p30, @p31, @p32, @p33, @p34, 6),
+(@p35, @p36, @p37, @p38, @p39, 7),
+(@p40, @p41, @p42, @p43, @p44, 8),
+(@p45, @p46, @p47, @p48, @p49, 9),
+(@p50, @p51, @p52, @p53, @p54, 10),
+(@p55, @p56, @p57, @p58, @p59, 11),
+(@p60, @p61, @p62, @p63, @p64, 12),
+(@p65, @p66, @p67, @p68, @p69, 13),
+(@p70, @p71, @p72, @p73, @p74, 14),
+(@p75, @p76, @p77, @p78, @p79, 15),
+(@p80, @p81, @p82, @p83, @p84, 16),
+(@p85, @p86, @p87, @p88, @p89, 17),
+(@p90, @p91, @p92, @p93, @p94, 18),
+(@p95, @p96, @p97, @p98, @p99, 19),
+(@p100, @p101, @p102, @p103, @p104, 20),
+(@p105, @p106, @p107, @p108, @p109, 21),
+(@p110, @p111, @p112, @p113, @p114, 22),
+(@p115, @p116, @p117, @p118, @p119, 23),
+(@p120, @p121, @p122, @p123, @p124, 24),
+(@p125, @p126, @p127, @p128, @p129, 25),
+(@p130, @p131, @p132, @p133, @p134, 26),
+(@p135, @p136, @p137, @p138, @p139, 27),
+(@p140, @p141, @p142, @p143, @p144, 28),
+(@p145, @p146, @p147, @p148, @p149, 29),
+(@p150, @p151, @p152, @p153, @p154, 30),
+(@p155, @p156, @p157, @p158, @p159, 31),
+(@p160, @p161, @p162, @p163, @p164, 32),
+(@p165, @p166, @p167, @p168, @p169, 33),
+(@p170, @p171, @p172, @p173, @p174, 34),
+(@p175, @p176, @p177, @p178, @p179, 35),
+(@p180, @p181, @p182, @p183, @p184, 36),
+(@p185, @p186, @p187, @p188, @p189, 37),
+(@p190, @p191, @p192, @p193, @p194, 38),
+(@p195, @p196, @p197, @p198, @p199, 39),
+(@p200, @p201, @p202, @p203, @p204, 40),
+(@p205, @p206, @p207, @p208, @p209, 41)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 1112ms
+Query: SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [AuditLog] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, 0),
+(@p5, @p6, @p7, @p8, @p9, 1),
+(@p10, @p11, @p12, @p13, @p14, 2),
+(@p15, @p16, @p17, @p18, @p19, 3)) AS i ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+VALUES (i.[Action], i.[CreatedAt], i.[EntityName], i.[NewValue], i.[OldValue])
+OUTPUT INSERTED.[Id], i._Position;
+ - Time: 603ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([Name], [StartDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6);
+ - Time: 481ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 442ms
+Query: SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; - Time: 523ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([CreatedAt], [CreatedBy], [Name], [StartDate], [UpdatedAt], [UpdatedBy])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10);
+ - Time: 724ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 705ms
+Query: SELECT TOP(1) [c].[Id], [c].[CreatedAt], [c].[CreatedBy], [c].[Name], [c].[StartDate], [c].[UpdatedAt], [c].[UpdatedBy]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 688ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 611ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([CreatedAt], [CreatedBy], [Name], [StartDate], [UpdatedAt], [UpdatedBy])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10);
+ - Time: 620ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 699ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Courses] ([CreatedAt], [CreatedBy], [Name], [StartDate], [UpdatedAt], [UpdatedBy])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10);
+ - Time: 641ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 789ms
+Query: SELECT TOP(1) [c].[Id], [c].[CreatedAt], [c].[CreatedBy], [c].[Name], [c].[StartDate], [c].[UpdatedAt], [c].[UpdatedBy]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 666ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 781ms
+Query: SELECT TOP(1) [c].[Id], [c].[CreatedAt], [c].[CreatedBy], [c].[Name], [c].[StartDate], [c].[UpdatedAt], [c].[UpdatedBy]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 735ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 673ms
+Query: SELECT TOP(1) [s].[Id], [s].[Address1], [s].[Address2], [s].[Age], [s].[DateOfBirth], [s].[FirstName], [s].[Surname], [s].[SId], [s].[balance]
+FROM [Students] AS [s]
+WHERE [s].[Id] = @__p_0 - Time: 734ms
+Query: SELECT TOP(1) [s].[Id], [s].[Address], [s].[Name]
+FROM [School] AS [s]
+WHERE [s].[Id] = @__p_0 - Time: 702ms
+Query: SELECT [s].[Id], [s].[Address1], [s].[Address2], [s].[Age], [s].[DateOfBirth], [s].[FirstName], [s].[Surname], [s].[SId], [s].[balance]
+FROM [Students] AS [s]
+WHERE [s].[SId] = @__p_0 - Time: 640ms
+Query: SELECT TOP(1) [c].[Id], [c].[CreatedAt], [c].[CreatedBy], [c].[Name], [c].[StartDate], [c].[UpdatedAt], [c].[UpdatedBy]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 989ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 845ms
+Query: SELECT TOP(1) [s].[Id], [s].[Address1], [s].[Address2], [s].[Age], [s].[DateOfBirth], [s].[FirstName], [s].[Surname], [s].[SId], [s].[balance]
+FROM [Students] AS [s]
+WHERE [s].[Id] = @__p_0 - Time: 695ms
+Query: SELECT TOP(1) [s].[Id], [s].[Address], [s].[Name]
+FROM [School] AS [s]
+WHERE [s].[Id] = @__p_0 - Time: 833ms
+Query: SELECT [s].[Id], [s].[Address1], [s].[Address2], [s].[Age], [s].[DateOfBirth], [s].[FirstName], [s].[Surname], [s].[SId], [s].[balance]
+FROM [Students] AS [s]
+WHERE [s].[SId] = @__p_0 - Time: 885ms
+Query: SELECT TOP(1) [c].[Id], [c].[CreatedAt], [c].[CreatedBy], [c].[Name], [c].[StartDate], [c].[UpdatedAt], [c].[UpdatedBy]
+FROM [Courses] AS [c]
+WHERE [c].[Id] = @__p_0 - Time: 879ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 934ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 1005ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+UPDATE [Courses] SET [Name] = @p5, [StartDate] = @p6, [UpdatedAt] = @p7, [UpdatedBy] = @p8
+OUTPUT 1
+WHERE [Id] = @p9;
+ - Time: 1240ms
+Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
+FROM [CourseStudent] AS [c]
+WHERE [c].[CourseId] = @__p_0 - Time: 731ms

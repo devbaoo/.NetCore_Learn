@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ToDoApp.Domains.Entities;
 using ToDoApp.Infrastructures.DataMapping;
+using ToDoApp.Infrastructures.Interceptors;
 
 namespace ToDoApp.Infrastructures
 {
@@ -34,7 +35,9 @@ namespace ToDoApp.Infrastructures
             {
                 optionsBuilder.UseLazyLoadingProxies();
                 optionsBuilder.UseSqlServer("Server=167.99.78.5,1433;Initial Catalog=ToDoApp;Persist Security Info=False;User ID=sa;Password=12345@aA;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+                optionsBuilder.AddInterceptors(new SqlQueryLoggingInterceptor(), new AuditLogInterceptor(), new CourseAuditInterceptor());
             }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,32 +69,7 @@ namespace ToDoApp.Infrastructures
         }
         public int SaveChanges()
         {
-            var auditLogs = new List<AuditLog>();
-            foreach (var entity in ChangeTracker.Entries()) {
-                var log = new AuditLog
-                {
-                    EntityName = entity.Entity.GetType().Name,
-                    CreatedAt = DateTime.Now,
-                    Action = entity.State.ToString(),
-                
-                };
-                if (entity.State == EntityState.Added)
-                {
-                    log.NewValue = JsonSerializer.Serialize(entity.CurrentValues.ToObject());
-                }
-                if (entity.State == EntityState.Modified)
-                {
-                    log.OldValue = JsonSerializer.Serialize(entity.OriginalValues.ToObject());
-                    log.NewValue = JsonSerializer.Serialize(entity.CurrentValues.ToObject());
-                }
-                if (entity.State == EntityState.Deleted)
-                {
-                    log.OldValue = JsonSerializer.Serialize(entity.OriginalValues.ToObject());
-                }
-                auditLogs.Add(log);
-
-            }
-            AuditLog.AddRange(auditLogs); //state 
+            
             return base.SaveChanges();
         }
     }

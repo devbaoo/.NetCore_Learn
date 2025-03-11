@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ToDoApp.Domains.Entities;
 
@@ -36,6 +37,7 @@ public class Student
     
     public virtual School School { get; set; }
     
+    [JsonIgnore] 
     public virtual ICollection<CourseStudent> CourseStudents { get; set; }
 
 }
