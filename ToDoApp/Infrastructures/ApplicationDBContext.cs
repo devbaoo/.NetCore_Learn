@@ -60,6 +60,8 @@ namespace ToDoApp.Infrastructures
             modelBuilder.Entity<CourseStudent>()
                 .HasKey(x => new {x.CourseId, x.StudentId});
             modelBuilder.ApplyConfiguration(new CourseMapping());
+            modelBuilder.Entity<Student>().HasQueryFilter(s => s.DeletedAt == null);
+            modelBuilder.Entity<Course>().HasQueryFilter(c => c.DeletedAt == null);
             base.OnModelCreating(modelBuilder);
         }
 
@@ -67,10 +69,21 @@ namespace ToDoApp.Infrastructures
         {
             return base.Entry(entity);
         }
-        public int SaveChanges()
+        public override int SaveChanges()
         {
-            
+            foreach (var entry in ChangeTracker.Entries<ISoftDelete>().Where(e => e.State == EntityState.Deleted))
+            {
+                entry.State = EntityState.Modified;
+
+                entry.Entity.DeletedAt = DateTime.UtcNow;
+                entry.Entity.DeletedBy = GetCurrentUserId();
+            }
+
             return base.SaveChanges();
+        }
+        private int GetCurrentUserId()
+        {
+            return 1; 
         }
     }
     

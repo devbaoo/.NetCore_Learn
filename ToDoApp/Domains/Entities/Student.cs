@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace ToDoApp.Domains.Entities;
 
 [Table("Students")]
-public class Student
+public class Student : ISoftDelete
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -40,4 +40,6 @@ public class Student
     [JsonIgnore] 
     public virtual ICollection<CourseStudent> CourseStudents { get; set; }
 
+    public int? DeletedBy { get; set; }
+    public DateTime? DeletedAt { get; set; }
 }
