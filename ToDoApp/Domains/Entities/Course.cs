@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace ToDoApp.Domains.Entities;
 
-public class Course
+public class Course : ISoftDelete
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -20,4 +20,6 @@ public class Course
     
     public DateTime UpdatedAt { get; set; }
     
+    public int? DeletedBy { get; set; }
+    public DateTime? DeletedAt { get; set; }
 }
