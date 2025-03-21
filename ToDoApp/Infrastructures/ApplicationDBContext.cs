@@ -22,9 +22,14 @@ namespace ToDoApp.Infrastructures
         public DbSet<Course> Course { get; set; }
         
         public DbSet<AuditLog> AuditLog { get; set; }
-
         
         public DbSet<CourseStudent> CourseStudent { get; set; }
+        
+        public DbSet<Exam> Exam { get; set; }
+        
+        public DbSet<ExamResult> ExamResult { get; set; }
+        
+        public DbSet<Question> QuestionBank { get; set; }
 
         
         // Nếu bạn đã cấu hình connection string qua DI, có thể không cần ghi đè OnConfiguring.
@@ -33,7 +38,7 @@ namespace ToDoApp.Infrastructures
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseLazyLoadingProxies();
+                // optionsBuilder.UseLazyLoadingProxies();
                 optionsBuilder.UseSqlServer("Server=167.99.78.5,1433;Initial Catalog=ToDoApp;Persist Security Info=False;User ID=sa;Password=12345@aA;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
                 optionsBuilder.AddInterceptors(new SqlQueryLoggingInterceptor(), new AuditLogInterceptor(), new CourseAuditInterceptor());
             }

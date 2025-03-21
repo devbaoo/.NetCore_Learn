@@ -1,4 +1,4 @@
-namespace TodoWeb.Application.Services
+namespace TodoApp.Application.Services
 {
     public interface IGuidGenerator
     {

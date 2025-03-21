@@ -866,3 +866,164 @@ WHERE [Id] = @p9;
 Query: SELECT [c].[CourseId], [c].[StudentId], [c].[AssignmentScore], [c].[FinalScore], [c].[PracticalScore]
 FROM [CourseStudent] AS [c]
 WHERE [c].[CourseId] = @__p_0 - Time: 731ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [Exam] ([CourseId], [DeletedAt], [DeletedBy], [ExamDate], [Name], [QuestionIds], [TimeLimitInMinutes])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11);
+ - Time: 441ms
+Query: SELECT TOP(1) [e].[Id], [e].[CourseId], [e].[DeletedAt], [e].[DeletedBy], [e].[ExamDate], [e].[Name], [e].[QuestionIds], [e].[TimeLimitInMinutes]
+FROM [Exam] AS [e]
+WHERE [e].[Id] = @__id_0 - Time: 402ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+UPDATE [Exam] SET [CourseId] = @p5, [DeletedAt] = @p6, [DeletedBy] = @p7, [ExamDate] = @p8, [Name] = @p9, [QuestionIds] = @p10, [TimeLimitInMinutes] = @p11
+OUTPUT 1
+WHERE [Id] = @p12;
+ - Time: 403ms
+Query: SELECT [e].[Id], [e].[CourseId], [e].[DeletedAt], [e].[DeletedBy], [e].[ExamDate], [e].[Name], [e].[QuestionIds], [e].[TimeLimitInMinutes]
+FROM [Exam] AS [e] - Time: 352ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 289ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 229ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 226ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 301ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 241ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 229ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 411ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 225ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 257ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 239ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 309ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 219ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 204ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 226ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 204ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 280ms
+Query: SET NOCOUNT ON;
+INSERT INTO [AuditLog] ([Action], [CreatedAt], [EntityName], [NewValue], [OldValue])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+INSERT INTO [QuestionBank] ([CorrectAnswer], [DeletedAt], [DeletedBy], [OptionA], [OptionB], [OptionC], [OptionD], [QuestionText])
+OUTPUT INSERTED.[Id]
+VALUES (@p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+ - Time: 206ms
+Query: SELECT [q].[Id], [q].[CorrectAnswer], [q].[DeletedAt], [q].[DeletedBy], [q].[OptionA], [q].[OptionB], [q].[OptionC], [q].[OptionD], [q].[QuestionText]
+FROM [QuestionBank] AS [q] - Time: 201ms
+Query: SELECT [e].[Id], [e].[CourseId], [e].[DeletedAt], [e].[DeletedBy], [e].[ExamDate], [e].[Name], [e].[QuestionIds], [e].[TimeLimitInMinutes]
+FROM [Exam] AS [e] - Time: 208ms

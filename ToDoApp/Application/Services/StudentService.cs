@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Dtos;
 using ToDoApp.Application.Dtos;
@@ -25,10 +26,12 @@ public interface IStudentService
 public class StudentService : IStudentService
 {
      private readonly IApplicationDBContext _dbContext;
+     private readonly IMapper _mapper;
 
-     public StudentService(IApplicationDBContext dbContext)
+     public StudentService(IApplicationDBContext dbContext, IMapper mapper)
      {
           _dbContext = dbContext;
+          _mapper = mapper;
      }
 
      // IQueryable the hien cau query van chua thuc thi
@@ -43,6 +46,11 @@ public class StudentService : IStudentService
                // WHERE School.Id = schoolId
                students = students.Where(x => x.School.Id == schoolId);
           }
+          var studentList = students.ToList();
+          var studentViewModels = _mapper.Map<List<StudentViewModel>>(studentList);
+
+          return studentViewModels;
+          
 
           //Select
           //Student.Id
@@ -51,13 +59,7 @@ public class StudentService : IStudentService
           //School.Name as SchoolName
           //From Students
           //join Schools on Students.SchoolId = Schools.Id
-          return students.Select(x => new StudentViewModel
-          {
-               Id = x.Id,
-               FullName = x.FirstName + " " + x.LastName,
-               Age = x.Age,
-               SchoolName = x.School.Name
-          }).ToList();
+          
      }
 
      public Student CreateStudent(StudentCreateModel student)
@@ -110,6 +112,7 @@ public class StudentService : IStudentService
           return _dbContext.Student.Find(id);
      }
 
+     
      public StudentCourseViewModel GetStudentDetail(int id)
      {
           var student = _dbContext.Student
@@ -122,21 +125,9 @@ public class StudentService : IStudentService
                return null;
           }
 
-          return new StudentCourseViewModel
-          {
-               StudentId = student.Id,
-               StudentName = student.FirstName + " " + student.LastName,
-               Courses = student.CourseStudents.Select(x => new CourseViewModel
-               {
-                    CourseId = x.Course.Id,
-                    CourseName = x.Course.Name,
-                    AssignmentScore = x.AssignmentScore,
-                    PracticalScore = x.PracticalScore,
-                    FinalScore = x.FinalScore
-               }).ToList() 
-          };
+          return _mapper.Map<StudentCourseViewModel>(student);
      }
-
+     
 
      public void EnrollCourse(int studentId, int courseId)
      {
@@ -207,7 +198,10 @@ public class StudentService : IStudentService
           
           var averageScore = (finalScore*3 + assignmentScore + practicalScore*2) / 6;
           return averageScore;
-     }    
+     }   
+     
+     
+      
      
           
 }

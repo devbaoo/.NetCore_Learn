@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Application.Dtos;
 using ToDoApp.Application.Dtos;
@@ -16,7 +17,7 @@ public interface ICourseService
     
     Course GetCourse(int id);
     
-    IEnumerable<CourseViewModel> GetCourses();
+    IEnumerable<CourseViewModels> GetCourses();
 
     CourseStudentViewModel GetCourseDetail(int id);
 }
@@ -24,19 +25,17 @@ public interface ICourseService
 public class CourseService : ICourseService
 {
     private readonly IApplicationDBContext _dbContext;
-     
-    public CourseService(IApplicationDBContext dbContext)
+    private readonly IMapper _mapper;
+    
+    public CourseService(IApplicationDBContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
+        _mapper = mapper;
     }
     
     public Course CreateCourse(CourseCreateModel course)
     {
-        var data = new Course
-        {
-            Name = course.CourseName,
-            StartDate = course.StartDate
-        };
+        var data = _mapper.Map<Course>(course);
         _dbContext.Course.Add(data);
         _dbContext.SaveChanges();
         
@@ -60,8 +59,7 @@ public class CourseService : ICourseService
         {
             throw new Exception("Course not found");
         }
-        data.Name = course.CourseName;
-        data.StartDate = course.StartDate;
+        _mapper.Map(course, data);
         _dbContext.SaveChanges();
         return data;
     }
@@ -74,15 +72,14 @@ public class CourseService : ICourseService
         }
         return data;
     }
-    public IEnumerable<CourseViewModel> GetCourses()
-    {
-        return _dbContext.Course.Select(x => new CourseViewModel
+        public IEnumerable<CourseViewModels> GetCourses()
         {
-            CourseId = x.Id,
-            CourseName = x.Name,
-            StartDate = x.StartDate
-        }).ToList();
-    }
+           var  query =  _dbContext.Course.ToList();
+              // return _mapper.Map<IEnumerable<CourseViewModel>>(query);
+            
+            var result = _mapper.ProjectTo<CourseViewModels>(query.AsQueryable()).ToList();
+            return result;
+        }   
     
     public CourseStudentViewModel GetCourseDetail(int id)
     {
@@ -94,16 +91,7 @@ public class CourseService : ICourseService
         {
             return null;
         }
-        return new CourseStudentViewModel
-        {
-            CourseId = course.Id,
-            CourseName = course.Name,
-            Students = course.CourseStudents.Select(x => new StudentViewModel
-            {
-                FullName  = x.Student.FirstName + " " + x.Student.LastName,
-                Age = x.Student.Age,
-            }).ToList()
-        };
+        return _mapper.Map<CourseStudentViewModel>(course);
     }
     
     

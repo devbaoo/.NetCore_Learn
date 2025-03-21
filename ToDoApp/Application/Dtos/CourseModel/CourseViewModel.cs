@@ -2,8 +2,8 @@ namespace ToDoApp.Application.Dtos;
 
 public class CourseViewModel
 {
-    public int CourseId { get; set; }
-    public string CourseName { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
     
     public decimal AssignmentScore { get; set; }
     
