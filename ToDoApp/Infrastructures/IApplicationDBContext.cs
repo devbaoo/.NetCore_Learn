@@ -13,6 +13,10 @@ namespace ToDoApp.Infrastructures
         public DbSet<Course> Course { get; set; }
         public DbSet<CourseStudent> CourseStudent { get; set; }
         
+        public DbSet<Exam> Exam { get; set; }
+        public DbSet<ExamResult> ExamResult { get; set; }
+        public DbSet<Question> QuestionBank { get; set; }
+        
         public DbSet<AuditLog> AuditLog { get; set; }
         
         public EntityEntry<T> Entry<T>(T entity) where T : class;

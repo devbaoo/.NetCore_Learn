@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ToDoApp.Domains.Entities;
 
@@ -9,5 +10,6 @@ public class School
     public string Address { get; set; }
     
     [NotMapped]
+    [JsonIgnore]
     public virtual ICollection<Student> Students { get; set; }
 }

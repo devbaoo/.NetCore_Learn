@@ -510,3 +510,5 @@ C:/0LamViec/ELCA_6months/ASP.NET/ToDoApp/ToDoApp/obj/Debug/net8.0/ToDoApp.source
 /Users/devbaoo/Learn/ToDoApp/ToDoApp/obj/Debug/net8.0/ToDoApp.sourcelink.json
 /Users/devbaoo/Learn/ToDoApp/ToDoApp/bin/Debug/net8.0/Castle.Core.dll
 /Users/devbaoo/Learn/ToDoApp/ToDoApp/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Proxies.dll
+/Users/devbaoo/Learn/ToDoApp/ToDoApp/bin/Debug/net8.0/AutoMapper.dll
+/Users/devbaoo/Learn/ToDoApp/ToDoApp/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
