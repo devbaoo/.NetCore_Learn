@@ -39,7 +39,7 @@ namespace ToDoApp.Infrastructures
             if (!optionsBuilder.IsConfigured)
             {
                 // optionsBuilder.UseLazyLoadingProxies();
-                optionsBuilder.UseSqlServer("Server=db-devbaoo.cj604kkc40w8.ap-southeast-1.rds.amazonaws.com,1433;Initial Catalog=ToDoApp;Persist Security Info=False;User ID=admin;Password=Khacbao0712;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Server=db-devbaoo.cj604kkc40w8.ap-southeast-1.rds.amazonaws.com,1433;Initial Catalog=;Persist Security Info=False;User ID=admin;Password=Khacbao0712;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
                 optionsBuilder.AddInterceptors(new SqlQueryLoggingInterceptor(), new AuditLogInterceptor(), new CourseAuditInterceptor());
             }
             
