@@ -2,39 +2,32 @@ pipeline {
     agent any
 
     tools {
-        dotnet 'dotnet8' // cần cấu hình trong Jenkins global tool config
+        customTool 'dotnet8'
     }
 
     stages {
-        stage('Clone') {
-            steps {
-                git 'https://github.com/devbaoo/SchoolManagement.git'
-            }
-        }
-
         stage('Restore') {
             steps {
-                sh 'dotnet restore'
+                sh '$DOTNET8_HOME/dotnet restore'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'dotnet build --configuration Release'
+                sh '$DOTNET8_HOME/dotnet build --configuration Release'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'dotnet test'
+                sh '$DOTNET8_HOME/dotnet test'
             }
         }
 
-        // Tuỳ chọn: tạo artifact hoặc deploy
-        // stage('Publish') {
-        //     steps {
-        //         sh 'dotnet publish -c Release -o ./publish'
-        //     }
-        // }
+        stage('Publish') {
+            steps {
+                sh '$DOTNET8_HOME/dotnet publish -c Release -o ./publish'
+            }
+        }
     }
 }
