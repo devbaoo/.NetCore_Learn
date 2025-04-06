@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Application.Common;
 using TodoApp.Application.Dtos.QuestionBankModel;
+using ToDoApp.Application.Params;
 using ToDoApp.Application.Services;
 
 namespace ToDoApp.Controllers;
@@ -48,11 +50,12 @@ public class QuestionBankController : ControllerBase
         return Ok(question);
     }
     [HttpGet]
-    public ActionResult GetQuestions()
+    public async Task<ActionResult<PagedResult<QuestionViewModel>>> GetQuestions([FromQuery] QuestionQueryParameters query)
     {
-        var questions = _questionBankService.GetQuestions();
-        return Ok(questions);
+        var result = await _questionBankService.GetQuestions(query);
+        return Ok(result);
     }
+
     [HttpPut("{id}")]
     public ActionResult UpdateQuestion(int id, [FromBody] QuestionUpdateModel question)
     {

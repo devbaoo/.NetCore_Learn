@@ -1,15 +1,19 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Application.Common;
 using TodoApp.Application.Dtos;
 using ToDoApp.Application.Dtos;
 using ToDoApp.Application.Dtos.StudentModel;
+using ToDoApp.Application.Params;
 using ToDoApp.Domains.Entities;
 using ToDoApp.Infrastructures;
 
 namespace ToDoApp.Application.Services;
 public interface IStudentService
 {
-     IEnumerable<StudentViewModel> GetStudents(int? schoolId);
+     Task<PagedResult<StudentViewModel>> GetStudents(StudentQueryParameters query);
+     
      Student CreateStudent(StudentCreateModel student);
      Student UpdateStudent(int id, StudentUpdateModel student);
      void DeleteStudent(int id);
@@ -34,34 +38,78 @@ public class StudentService : IStudentService
           _mapper = mapper;
      }
 
-     // IQueryable the hien cau query van chua thuc thi
-     public IEnumerable<StudentViewModel> GetStudents(int? schoolId)
+     // // IQueryable the hien cau query van chua thuc thi
+     // public IEnumerable<StudentViewModel> GetStudents(int? schoolId)
+     // {
+     //      // SELECT * FROM Students join Schools on Students.SchoolId = Schools.Id
+     //      var students = _dbContext.Student
+     //           .Include(Student => Student.School)
+     //           .AsQueryable();
+     //      if (schoolId != null)
+     //      {
+     //           // WHERE School.Id = schoolId
+     //           students = students.Where(x => x.School.Id == schoolId);
+     //      }
+     //      var studentList = students.ToList();
+     //      var studentViewModels = _mapper.Map<List<StudentViewModel>>(studentList);
+     //
+     //      return studentViewModels;
+     //      
+     //
+     //      //Select
+     //      //Student.Id
+     //      //Student.FirstName + " " + Student.LastName as FullName
+     //      //Student.Age
+     //      //School.Name as SchoolName
+     //      //From Students
+     //      //join Schools on Students.SchoolId = Schools.Id
+     //      
+     // }
+     public async Task<PagedResult<StudentViewModel>> GetStudents(StudentQueryParameters query)
      {
-          // SELECT * FROM Students join Schools on Students.SchoolId = Schools.Id
           var students = _dbContext.Student
-               .Include(Student => Student.School)
+               .Include(s => s.School)
                .AsQueryable();
-          if (schoolId != null)
+
+          // Filter theo school
+          if (query.SchoolId.HasValue)
           {
-               // WHERE School.Id = schoolId
-               students = students.Where(x => x.School.Id == schoolId);
+               students = students.Where(s => s.SId == query.SchoolId);
           }
-          var studentList = students.ToList();
-          var studentViewModels = _mapper.Map<List<StudentViewModel>>(studentList);
 
-          return studentViewModels;
-          
+          if (!string.IsNullOrEmpty(query.Keyword))
+          {
+               string keyword = query.Keyword.ToLower();
+               students = students.Where(s =>
+                    (s.FirstName + " " + s.LastName).ToLower().Contains(keyword) ||
+                    s.School.Name.ToLower().Contains(keyword));
+          }
 
-          //Select
-          //Student.Id
-          //Student.FirstName + " " + Student.LastName as FullName
-          //Student.Age
-          //School.Name as SchoolName
-          //From Students
-          //join Schools on Students.SchoolId = Schools.Id
-          
+          if (!string.IsNullOrEmpty(query.SortBy))
+          {
+               students = query.SortDesc
+                    ? students.OrderByDescending(s => EF.Property<object>(s, query.SortBy))
+                    : students.OrderBy(s => EF.Property<object>(s, query.SortBy));
+          }
+
+          // Pagination
+          int totalItems = await students.CountAsync();
+
+          var result = await students
+               .Skip((query.PageIndex - 1) * query.PageSize)
+               .Take(query.PageSize)
+               .ProjectTo<StudentViewModel>(_mapper.ConfigurationProvider)
+               .ToListAsync();
+
+          return new PagedResult<StudentViewModel>
+          {
+               TotalItems = totalItems,
+               TotalPages = (int)Math.Ceiling((double)totalItems / query.PageSize),
+               PageIndex = query.PageIndex,
+               PageSize = query.PageSize,
+               Items = result
+          };
      }
-
      public Student CreateStudent(StudentCreateModel student)
      {
           var data = new Student

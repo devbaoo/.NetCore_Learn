@@ -1,5 +1,9 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using TodoApp.Application.Common;
 using TodoApp.Application.Dtos.QuestionBankModel;
+using ToDoApp.Application.Params;
 using ToDoApp.Domains.Entities;
 using ToDoApp.Infrastructures;
 
@@ -11,7 +15,7 @@ public interface IQuestionBankService
 
     void DeleteQuestion(int id);
     QuestionViewModel GetQuestion(int id);
-    IEnumerable<QuestionViewModel> GetQuestions();
+    Task<PagedResult<QuestionViewModel>> GetQuestions(QuestionQueryParameters query);
 
     Question UpdateQuestion(int id, QuestionUpdateModel question);
 
@@ -56,11 +60,41 @@ public class QuestionBankService: IQuestionBankService
         return _mapper.Map<QuestionViewModel>(question);
        
     }
-    public IEnumerable<QuestionViewModel> GetQuestions()
+    public async Task<PagedResult<QuestionViewModel>> GetQuestions(QuestionQueryParameters query)
     {
-        var questions = _dbContext.QuestionBank.ToList();
-        return _mapper.Map<IEnumerable<QuestionViewModel>>(questions);
-        
+        var questions = _dbContext.QuestionBank.AsQueryable();
+
+        // 🔍 Filter theo nội dung câu hỏi
+        if (!string.IsNullOrWhiteSpace(query.Keyword))
+        {
+            var keyword = query.Keyword.ToLower();
+            questions = questions.Where(q => q.QuestionText.ToLower().Contains(keyword));
+        }
+
+        // 🔃 Sắp xếp động
+        if (!string.IsNullOrEmpty(query.SortBy))
+        {
+            questions = query.SortDesc
+                ? questions.OrderByDescending(q => EF.Property<object>(q, query.SortBy))
+                : questions.OrderBy(q => EF.Property<object>(q, query.SortBy));
+        }
+
+        // 📊 Pagination
+        int totalItems = await questions.CountAsync();
+        var items = await questions
+            .Skip((query.PageIndex - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .ProjectTo<QuestionViewModel>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        return new PagedResult<QuestionViewModel>
+        {
+            TotalItems = totalItems,
+            TotalPages = (int)Math.Ceiling((double)totalItems / query.PageSize),
+            PageIndex = query.PageIndex,
+            PageSize = query.PageSize,
+            Items = items
+        };
     }
     public Question UpdateQuestion(int id, QuestionUpdateModel question)
     {
