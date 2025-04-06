@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Application.Common;
 using ToDoApp.Application.Dtos;
+using ToDoApp.Application.Params;
 using ToDoApp.Application.Services;
 using ToDoApp.Domains.Entities;
 
@@ -17,11 +19,13 @@ public class SchoolController : ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<IEnumerable<SchoolViewModel>> GetSchools()
+    [HttpGet]
+    public async Task<ActionResult<PagedResult<SchoolViewModel>>> GetSchools([FromQuery] SchoolQueryParameters query)
     {
-        var schools = _schoolService.GetSchools();
-        return Ok(schools);
+        var result = await _schoolService.GetSchools(query);
+        return Ok(result);
     }
+
     
     [HttpGet("{id}")]
     public ActionResult<School> GetSchool(int id)

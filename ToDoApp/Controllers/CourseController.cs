@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Application.Common;
 using TodoApp.Application.Dtos;
 using ToDoApp.Application.Dtos;
+using ToDoApp.Application.Params;
 using ToDoApp.Application.Services;
 using ToDoApp.Domains.Entities;
 
@@ -19,11 +21,12 @@ public class CourseController: ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<CourseViewModel>> GetCourses()
+    public async Task<ActionResult<PagedResult<CourseViewModels>>> GetCourses([FromQuery] CourseQueryParameters query)
     {
-        var courses = _courseService.GetCourses();
-        return Ok( courses );
+        var result = await _courseService.GetCourses(query);
+        return Ok(result);
     }
+
 
     [HttpGet("{id}")]
     public ActionResult<Course> GetCourse(int id)

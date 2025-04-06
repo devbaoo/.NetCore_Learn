@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Application.Common;
 using TodoApp.Application.Dtos.ExamModel;
+using ToDoApp.Application.Params;
 using ToDoApp.Application.Services;
 
 namespace ToDoApp.Controllers;
@@ -50,11 +52,12 @@ public class ExamController : ControllerBase
     }
     
     [HttpGet]
-    public ActionResult GetExams()
+    public async Task<ActionResult<PagedResult<ExamViewModel>>> GetExams([FromQuery] ExamQueryParameters query)
     {
-        var exams = _examService.GetExams();
-        return Ok(exams);
+        var result = await _examService.GetExams(query);
+        return Ok(result);
     }
+
     
     [HttpPut("{id}")]
     public ActionResult UpdateExam(int id, [FromBody] ExamUpdateModel exam)

@@ -1,7 +1,10 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Application.Common;
 using TodoApp.Application.Dtos.ExamModel;
 using TodoApp.Application.Dtos.ExamResultModel;
+using ToDoApp.Application.Params;
 using ToDoApp.Domains.Entities;
 using ToDoApp.Infrastructures;
 
@@ -14,8 +17,8 @@ public interface IExamService
     void DeleteExam(int id);
     
     ExamViewModel GetExam(int id);
-    
-    IEnumerable<ExamViewModel> GetExams();
+
+    Task<PagedResult<ExamViewModel>> GetExams(ExamQueryParameters query);
     
     Exam UpdateExam(int id, ExamUpdateModel exam);
 
@@ -70,14 +73,42 @@ public class ExamService : IExamService
         return _mapper.Map<ExamViewModel>(exam);
     }
 
-    public IEnumerable<ExamViewModel> GetExams()
+    public async Task<PagedResult<ExamViewModel>> GetExams(ExamQueryParameters query)
     {
         var exams = _dbContext.Exam
             .Include(e => e.ExamQuestions)
             .ThenInclude(eq => eq.Question)
-            .ToList();
+            .AsQueryable();
 
-        return _mapper.Map<IEnumerable<ExamViewModel>>(exams);
+        // 🔍 Filter theo keyword
+        if (!string.IsNullOrWhiteSpace(query.Keyword))
+        {
+            exams = exams.Where(e => e.Name.ToLower().Contains(query.Keyword.ToLower()));
+        }
+
+        if (!string.IsNullOrEmpty(query.SortBy))
+        {
+            exams = query.SortDesc
+                ? exams.OrderByDescending(e => EF.Property<object>(e, query.SortBy))
+                : exams.OrderBy(e => EF.Property<object>(e, query.SortBy));
+        }
+
+        var totalItems = await exams.CountAsync();
+
+        var result = await exams
+            .Skip((query.PageIndex - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .ProjectTo<ExamViewModel>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        return new PagedResult<ExamViewModel>
+        {
+            TotalItems = totalItems,
+            TotalPages = (int)Math.Ceiling((double)totalItems / query.PageSize),
+            PageIndex = query.PageIndex,
+            PageSize = query.PageSize,
+            Items = result
+        };
     }
 
     public Exam UpdateExam(int id, ExamUpdateModel model)

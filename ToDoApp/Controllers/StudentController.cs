@@ -3,8 +3,10 @@ using ToDoApp.Application.Dtos;
 using ToDoApp.Application.Services;
 using ToDoApp.Domains.Entities;
 using System.Collections.Generic;
+using TodoApp.Application.Common;
 using TodoApp.Application.Dtos;
 using ToDoApp.Application.Dtos.StudentModel;
+using ToDoApp.Application.Params;
 
 namespace ToDoApp.Controllers;
 
@@ -20,11 +22,12 @@ public class StudentController : ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<IEnumerable<StudentViewModel>> GetStudents([FromQuery] int? schoolId)
+    public async Task<ActionResult<PagedResult<StudentViewModel>>> GetStudents([FromQuery] StudentQueryParameters query)
     {
-        var students = _studentService.GetStudents(schoolId);
-        return Ok( students );
+        var result = await _studentService.GetStudents(query);
+        return Ok(result);
     }
+
     
     [HttpPost]
     public ActionResult<Student> CreateStudent([FromBody] StudentCreateModel student)
