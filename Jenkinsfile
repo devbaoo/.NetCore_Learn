@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        dotnet 'dotnet6' // cần cấu hình trong Jenkins global tool config
+        dotnet 'dotnet8' // cần cấu hình trong Jenkins global tool config
     }
 
     stages {
