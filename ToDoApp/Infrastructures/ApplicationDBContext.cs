@@ -39,7 +39,7 @@ namespace ToDoApp.Infrastructures
             if (!optionsBuilder.IsConfigured)
             {
                 // optionsBuilder.UseLazyLoadingProxies();
-                optionsBuilder.UseSqlServer("Server=167.99.78.5,1433;Initial Catalog=ToDoApp;Persist Security Info=False;User ID=sa;Password=12345@aA;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Server=db-devbaoo.cj604kkc40w8.ap-southeast-1.rds.amazonaws.com,1433;Initial Catalog=ToDoApp;Persist Security Info=False;User ID=admin;Password=Khacbao0712;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
                 optionsBuilder.AddInterceptors(new SqlQueryLoggingInterceptor(), new AuditLogInterceptor(), new CourseAuditInterceptor());
             }
             
@@ -67,6 +67,7 @@ namespace ToDoApp.Infrastructures
             modelBuilder.ApplyConfiguration(new CourseMapping());
             modelBuilder.Entity<Student>().HasQueryFilter(s => s.DeletedAt == null);
             modelBuilder.Entity<Course>().HasQueryFilter(c => c.DeletedAt == null);
+            
             base.OnModelCreating(modelBuilder);
         }
 
