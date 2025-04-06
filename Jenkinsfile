@@ -1,32 +1,33 @@
 pipeline {
     agent any
 
-    tools {
-        customTool 'dotnet8'
+    environment {
+        DOTNET_ROOT = '/root/.dotnet'
+        PATH = "/root/.dotnet:$PATH"
     }
 
     stages {
         stage('Restore') {
             steps {
-                sh '$DOTNET8_HOME/dotnet restore'
+                sh 'dotnet restore'
             }
         }
 
         stage('Build') {
             steps {
-                sh '$DOTNET8_HOME/dotnet build --configuration Release'
+                sh 'dotnet build --configuration Release'
             }
         }
 
         stage('Test') {
             steps {
-                sh '$DOTNET8_HOME/dotnet test'
+                sh 'dotnet test'
             }
         }
 
         stage('Publish') {
             steps {
-                sh '$DOTNET8_HOME/dotnet publish -c Release -o ./publish'
+                sh 'dotnet publish -c Release -o ./publish'
             }
         }
     }
