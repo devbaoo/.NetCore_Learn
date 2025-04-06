@@ -35,8 +35,7 @@ public class StudentController : ControllerBase
         }
         
         var createdStudent = _studentService.CreateStudent(student);
-        return CreatedAtAction(nameof(GetStudentDetail), new { id = createdStudent.Id }, 
-            new { createdStudent });
+        return Ok(createdStudent);
     }
     
     [HttpPut("{id}")]
