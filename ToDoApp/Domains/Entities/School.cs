@@ -9,6 +9,10 @@ public class School
     public string Name { get; set; }
     public string Address { get; set; }
     
+    public int? DeletedBy { get; set; }
+
+    public DateTime? DeletedAt { get; set; }
+    
     [NotMapped]
     [JsonIgnore]
     public virtual ICollection<Student> Students { get; set; }

@@ -86,7 +86,7 @@ public class CourseController: ControllerBase
         var courseDetail = _courseService.GetCourseDetail(id);
         if(courseDetail == null)
         {
-            return NotFound(new { status = "error", message = "Student not found" });
+            return NotFound(new { status = "error", message = "Course not found" });
         }
         return Ok(courseDetail );
     }

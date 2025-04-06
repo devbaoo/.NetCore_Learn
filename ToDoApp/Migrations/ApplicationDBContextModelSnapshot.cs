@@ -141,16 +141,29 @@ namespace ToDoApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("QuestionIds")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TimeLimitInMinutes")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.ToTable("Exam");
+                });
+
+            modelBuilder.Entity("ToDoApp.Domains.Entities.ExamQuestion", b =>
+                {
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExamId", "QuestionId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("ExamQuestion");
                 });
 
             modelBuilder.Entity("ToDoApp.Domains.Entities.ExamResult", b =>
@@ -161,11 +174,11 @@ namespace ToDoApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateCalculated")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Score")
                         .HasColumnType("decimal(18,2)");
@@ -174,6 +187,10 @@ namespace ToDoApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("ExamResult");
                 });
@@ -233,6 +250,12 @@ namespace ToDoApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -245,7 +268,10 @@ namespace ToDoApp.Migrations
             modelBuilder.Entity("ToDoApp.Domains.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address1")
                         .IsRequired()
@@ -330,6 +356,55 @@ namespace ToDoApp.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("ToDoApp.Domains.Entities.Exam", b =>
+                {
+                    b.HasOne("ToDoApp.Domains.Entities.Course", "Course")
+                        .WithMany("Exams")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("ToDoApp.Domains.Entities.ExamQuestion", b =>
+                {
+                    b.HasOne("ToDoApp.Domains.Entities.Exam", "Exam")
+                        .WithMany("ExamQuestions")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ToDoApp.Domains.Entities.Question", "Question")
+                        .WithMany("ExamQuestions")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("ToDoApp.Domains.Entities.ExamResult", b =>
+                {
+                    b.HasOne("ToDoApp.Domains.Entities.Exam", "Exam")
+                        .WithMany("ExamResult")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ToDoApp.Domains.Entities.Student", "Student")
+                        .WithMany("ExamResult")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("ToDoApp.Domains.Entities.Student", b =>
                 {
                     b.HasOne("ToDoApp.Domains.Entities.School", "School")
@@ -344,6 +419,20 @@ namespace ToDoApp.Migrations
             modelBuilder.Entity("ToDoApp.Domains.Entities.Course", b =>
                 {
                     b.Navigation("CourseStudents");
+
+                    b.Navigation("Exams");
+                });
+
+            modelBuilder.Entity("ToDoApp.Domains.Entities.Exam", b =>
+                {
+                    b.Navigation("ExamQuestions");
+
+                    b.Navigation("ExamResult");
+                });
+
+            modelBuilder.Entity("ToDoApp.Domains.Entities.Question", b =>
+                {
+                    b.Navigation("ExamQuestions");
                 });
 
             modelBuilder.Entity("ToDoApp.Domains.Entities.School", b =>
@@ -354,6 +443,8 @@ namespace ToDoApp.Migrations
             modelBuilder.Entity("ToDoApp.Domains.Entities.Student", b =>
                 {
                     b.Navigation("CourseStudents");
+
+                    b.Navigation("ExamResult");
                 });
 #pragma warning restore 612, 618
         }

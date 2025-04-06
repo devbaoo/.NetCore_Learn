@@ -10,5 +10,4 @@ public class StudentCreateModel
     public string Address1 { get; set; }
     
     public int SchoolId { get; set; }
-    public string SchoolName { get; set; }
 }

@@ -65,21 +65,21 @@ public class CourseService : ICourseService
     }
     public Course GetCourse(int id)
     {
-        var data = _dbContext.Course.Find(id);
+        var data = _dbContext.Course.FirstOrDefault(x => x.Id == id);
         if (data == null)
         {
             throw new Exception("Course not found");
         }
         return data;
-    }
-        public IEnumerable<CourseViewModels> GetCourses()
-        {
-           var  query =  _dbContext.Course.ToList();
-              // return _mapper.Map<IEnumerable<CourseViewModel>>(query);
+    } 
+    public IEnumerable<CourseViewModels> GetCourses()
+{
+    var  query =  _dbContext.Course.ToList();
+    // return _mapper.Map<IEnumerable<CourseViewModel>>(query);
             
-            var result = _mapper.ProjectTo<CourseViewModels>(query.AsQueryable()).ToList();
-            return result;
-        }   
+    var result = _mapper.ProjectTo<CourseViewModels>(query.AsQueryable()).ToList();
+    return result;
+}   
     
     public CourseStudentViewModel GetCourseDetail(int id)
     {
@@ -93,8 +93,6 @@ public class CourseService : ICourseService
         }
         return _mapper.Map<CourseStudentViewModel>(course);
     }
-    
-    
-    
+
     
 }

@@ -42,8 +42,7 @@ public class SchoolController : ControllerBase
             return BadRequest(new { status = "error", message = "Invalid data", errors = ModelState });
         }
         var createdSchool = _schoolService.CreateSchool(school);
-        return CreatedAtAction(nameof(GetSchool), new { id = createdSchool.Id }, 
-            new { createdSchool });
+        return Ok(createdSchool);
     }
     
     [HttpPut("{id}")]
