@@ -1,12 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using TodoApp.Application.Common;
 using TodoApp.Application.Dtos;
 using ToDoApp.Application.Dtos;
+using ToDoApp.Application.Params;
 using ToDoApp.Domains.Entities;
 using ToDoApp.Infrastructures;
 
 namespace ToDoApp.Application.Services;
 public interface ISchoolService
 {
-    IEnumerable<SchoolViewModel> GetSchools();
+    Task<PagedResult<SchoolViewModel>> GetSchools(SchoolQueryParameters query);
     
     School CreateSchool(SchoolCreateModel school);
     
@@ -29,14 +32,46 @@ public class SchoolService : ISchoolService
         _dbContext = dbContext;
     }
 
-    public IEnumerable<SchoolViewModel> GetSchools()
+    public async Task<PagedResult<SchoolViewModel>> GetSchools(SchoolQueryParameters query)
     {
-        return _dbContext.School.Select(x => new SchoolViewModel
+        var schools = _dbContext.School.AsQueryable();
+
+        // 🔍 Filter
+        if (!string.IsNullOrWhiteSpace(query.Keyword))
         {
-            Id = x.Id,
-            Name = x.Name,
-            Address = x.Address
-        }).ToList();
+            var keyword = query.Keyword.ToLower();
+            schools = schools.Where(x =>
+                x.Name.ToLower().Contains(keyword) ||
+                x.Address.ToLower().Contains(keyword));
+        }
+
+        if (!string.IsNullOrEmpty(query.SortBy))
+        {
+            schools = query.SortDesc
+                ? schools.OrderByDescending(s => EF.Property<object>(s, query.SortBy))
+                : schools.OrderBy(s => EF.Property<object>(s, query.SortBy));
+        }
+
+        var totalItems = await schools.CountAsync();
+        var items = await schools
+            .Skip((query.PageIndex - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .Select(x => new SchoolViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Address = x.Address
+            })
+            .ToListAsync();
+
+        return new PagedResult<SchoolViewModel>
+        {
+            TotalItems = totalItems,
+            TotalPages = (int)Math.Ceiling((double)totalItems / query.PageSize),
+            PageIndex = query.PageIndex,
+            PageSize = query.PageSize,
+            Items = items
+        };
     }
 
     public School CreateSchool(SchoolCreateModel school)

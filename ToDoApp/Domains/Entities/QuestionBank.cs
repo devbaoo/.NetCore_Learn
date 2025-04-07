@@ -9,8 +9,11 @@ public class Question : ISoftDelete
     public string OptionC { get; set; }
     public string OptionD { get; set; }
     public string CorrectAnswer { get; set; }
-    
+
+    public virtual ICollection<ExamQuestion> ExamQuestions { get; set; } = new List<ExamQuestion>();
+
     public int? DeletedBy { get; set; }
     public DateTime? DeletedAt { get; set; }
 }
+
 

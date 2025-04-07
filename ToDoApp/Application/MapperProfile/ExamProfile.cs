@@ -12,7 +12,9 @@ public class ExamProfile : Profile
     {
         CreateMap<ExamCreateModel, Exam>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
-        CreateMap<Exam, ExamViewModel>();
+        CreateMap<Exam, ExamViewModel>()
+            .ForMember(dest => dest.QuestionIds, opt => opt.MapFrom(src =>
+                src.ExamQuestions.Select(eq => eq.QuestionId).ToList()));
         CreateMap<ExamUpdateModel, Exam>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
         CreateMap<StudentExamSubmission, ExamResult>();

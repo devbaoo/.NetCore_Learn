@@ -9,7 +9,7 @@ namespace ToDoApp.Domains.Entities;
 public class Student : ISoftDelete
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     
     [MaxLength(50)]
@@ -39,6 +39,7 @@ public class Student : ISoftDelete
     
     [JsonIgnore] 
     public virtual ICollection<CourseStudent> CourseStudents { get; set; }
+    public virtual ICollection<ExamResult> ExamResult { get; set; } = new List<ExamResult>();
 
     public int? DeletedBy { get; set; }
     public DateTime? DeletedAt { get; set; }

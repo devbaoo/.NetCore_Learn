@@ -12,6 +12,8 @@ public class Course : ISoftDelete
     [JsonIgnore] 
     public virtual ICollection<CourseStudent> CourseStudents { get; set; }
     
+    public virtual ICollection<Exam> Exams { get; set; }
+    
     public int CreatedBy { get; set; }
     
     public DateTime CreatedAt { get; set; }
